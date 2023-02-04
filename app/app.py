@@ -2,7 +2,7 @@ import logging
 
 from flask import Flask
 
-from . import core
+from app import core
 
 
 app = Flask(__name__)

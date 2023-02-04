@@ -121,7 +121,7 @@ def main_multithread():
     screenshotter.take_screenshots()
 
 
-if __name__ == "__main__":
-    tic = perf_counter()
-    main_multithread()
-    print(f"Multithread: {perf_counter() - tic}")
+# if __name__ == "__main__":
+#     tic = perf_counter()
+#     main_multithread()
+#     print(f"Multithread: {perf_counter() - tic}")

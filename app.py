@@ -1,7 +1,8 @@
 from flask import Flask
-from werkzeug import http
 
-from .screens4sudhy import main_multithread
+from screens4sudhy import main_multithread
+
+
 app = Flask(__name__)
 
 @app.route("/screenshots", methods=["GET"])

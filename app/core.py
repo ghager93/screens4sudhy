@@ -9,6 +9,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 WEBPAGES = [
     "https://www.coles.com.au/search?q=room spray",
@@ -57,6 +59,10 @@ def get_chrome_driver(driver_path: str = DRIVER_PATH) -> webdriver.Chrome:
     options.add_argument("--window-size=1580,1280")
 
     return webdriver.Chrome(service=service, options=options)
+
+
+def get_chrome_driver_from_manager() -> webdriver.Chrome:
+    return webdriver.Chrome(ChromeDriverManager().install())
 
 
 def create_todays_directory() -> str:

@@ -49,6 +49,6 @@ def list_dir():
 
 @app.route("/pagesource")
 def get_google_pagesource():
-    webdriver = core.get_chrome_driver()
+    webdriver = core.get_chrome_driver_from_manager()
     webdriver.get("https://google.com")
     return webdriver.page_source, 200

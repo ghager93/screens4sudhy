@@ -45,3 +45,10 @@ def list_dir():
             walk += os.path.join(root, name) + '\n'
 
     return walk, 200
+
+
+@app.route("/pagesource")
+def get_google_pagesource():
+    webdriver = core.get_chrome_driver()
+    webdriver.get("https://google.com")
+    return webdriver.page_source, 200

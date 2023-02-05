@@ -62,7 +62,7 @@ def get_chrome_driver(driver_path: str = DRIVER_PATH) -> webdriver.Chrome:
 
 
 def get_chrome_driver_from_manager() -> webdriver.Chrome:
-    return webdriver.Chrome(ChromeDriverManager().install())
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 
 def create_todays_directory() -> str:

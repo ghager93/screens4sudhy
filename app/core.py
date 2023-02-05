@@ -37,8 +37,12 @@ WEBPAGES = [
     "https://www.coles.com.au/browse/household/pest-control"
 ]
 
+DRIVER_PATH = r"/chromedriver/stable/chromedriver"
 
-def get_chrome_driver(driver_path: str) -> webdriver.Chrome:
+BASE_PATH = "screenshots"
+
+
+def get_chrome_driver(driver_path: str = DRIVER_PATH) -> webdriver.Chrome:
     service = Service(driver_path)
 
     options = Options()
@@ -56,16 +60,20 @@ def get_chrome_driver(driver_path: str) -> webdriver.Chrome:
 
 
 def create_todays_directory() -> str:
-    base = "screenshots"
+    base = BASE_PATH
     if not os.path.isdir(base):
         os.mkdir("screenshots")
 
-    today = str(datetime.now().date())
-    todays_path = os.path.join(base, today)
+    todays_path = get_todays_path()
     if not os.path.isdir(todays_path):
         os.mkdir(todays_path)
 
     return todays_path
+
+
+def get_todays_path() -> str:
+    today = str(datetime.now().date())
+    return os.path.join(BASE_PATH, today)
 
 
 class Screenshotter:
@@ -85,7 +93,7 @@ class Screenshotter:
 
 
 class ScreenshotterMultiThread:
-    def __init__(self, directory: str = "screenshots", num_workers: int = 10, driver_path: str = r"/chromedriver/stable/chromedriver") -> None:
+    def __init__(self, directory: str = "screenshots", num_workers: int = 10, driver_path: str = DRIVER_PATH) -> None:
         self.directory = directory
         self.num_workers = num_workers
         self.driver_path = driver_path
@@ -99,13 +107,13 @@ class ScreenshotterMultiThread:
         driver.get_screenshot_as_file(self._generate_filepath(url))
         driver.quit()
 
-    def take_screenshots(self) -> None:
+    def take_screenshots(self, urls=WEBPAGES) -> None:
         with ThreadPoolExecutor(max_workers=self.num_workers) as thread:
-            thread.map(self.take_screenshot_to_file, WEBPAGES)
+            thread.map(self.take_screenshot_to_file, urls)
         
         
 def main_singlethread():
-    driver = get_chrome_driver(r"/chromedriver/stable/chromedriver")
+    driver = get_chrome_driver()
     todays_directory = create_todays_directory()
 
     screenshotter = Screenshotter(driver, todays_directory)
@@ -114,14 +122,25 @@ def main_singlethread():
     driver.quit()
 
 
-def main_multithread():
+def main_multithread(urls=WEBPAGES):
     todays_directory = create_todays_directory()
     
-    screenshotter = ScreenshotterMultiThread(todays_directory, 10, r"/chromedriver/stable/chromedriver")
-    screenshotter.take_screenshots()
+    screenshotter = ScreenshotterMultiThread(todays_directory)
+    screenshotter.take_screenshots(urls)
+
+    return todays_directory
 
 
-# if __name__ == "__main__":
-#     tic = perf_counter()
-#     main_multithread()
-#     print(f"Multithread: {perf_counter() - tic}")
+def take_all_screenshots():
+    return main_multithread()
+
+
+def take_screenshots(urls):
+    return main_multithread(urls)
+
+
+
+if __name__ == "__main__":
+    tic = perf_counter()
+    main_multithread()
+    print(f"Multithread: {perf_counter() - tic}")

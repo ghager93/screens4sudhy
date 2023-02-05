@@ -30,8 +30,16 @@ app.register_blueprint(healthcheck.bp, url_prefix="/api/healthcheck")
 app.register_blueprint(take_screenshots.bp, url_prefix="/api/screenshots")
 app.register_blueprint(download.bp, url_prefix="/api/download")
 
-@app.route("/downloadtest", methods=["GET", "POST"])
-def download_test():
-    path = os.path.join(app.root_path, "core.py")
-    return send_file(path, as_attachment=True)
+@app.route("/")
+def list_dir():
+    exclude = ["__pycache__", "venv", ".git"]
+    for root, dirs, files in os.walk(".", topdown=False):
+        if any([e in root for e in exclude]):
+            continue
+        [dirs.remove(d) for d in dirs if d in exclude]
+        for name in files:
+            print(os.path.join(root, name))
+        for name in dirs:
+            print(os.path.join(root, name))
 
+    return "", 200

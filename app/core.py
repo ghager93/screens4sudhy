@@ -37,7 +37,7 @@ WEBPAGES = [
     "https://www.coles.com.au/browse/household/pest-control"
 ]
 
-DRIVER_PATH = r"/chromedriver/stable/chromedriver"
+DRIVER_PATH = r"chromedriver"
 
 BASE_PATH = "screenshots"
 

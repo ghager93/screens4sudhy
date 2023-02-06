@@ -1,7 +1,7 @@
 import os
 import logging
 
-from flask import Flask, send_file
+from flask import Flask, send_file, request
 
 from app import core
 
@@ -48,6 +48,17 @@ def list_dir():
 
 
 @app.route("/pagesource")
+def get_google_pagesource():
+    driver_path = "/chromedriver"
+    if "driver_path" in request.args:
+        driver_path = request.args.get("driver_path")
+    # webdriver = core.get_chrome_driver_from_manager()
+    webdriver = core.get_chrome_driver(driver_path)
+    webdriver.get("https://google.com")
+    return webdriver.page_source, 200
+
+
+@app.route("/pagesourcemanager")
 def get_google_pagesource():
     webdriver = core.get_chrome_driver_from_manager()
     webdriver.get("https://google.com")

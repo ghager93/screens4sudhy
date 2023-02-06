@@ -59,7 +59,7 @@ def get_google_pagesource():
 
 
 @app.route("/pagesourcemanager")
-def get_google_pagesource():
+def get_google_pagesource_manager():
     webdriver = core.get_chrome_driver_from_manager()
     webdriver.get("https://google.com")
     return webdriver.page_source, 200

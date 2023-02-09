@@ -8,7 +8,7 @@ ADD . /srv
 RUN apt-get -y update
 RUN pip install --upgrade pip
 RUN apt-get install zip -y
-RUn apt-get install unzip -y
+RUN apt-get install unzip -y
 
 
 RUN pip install -r requirements.txt

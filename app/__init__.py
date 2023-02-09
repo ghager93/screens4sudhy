@@ -63,3 +63,10 @@ def get_google_pagesource_manager():
     webdriver = core.get_chrome_driver_from_manager()
     webdriver.get("https://google.com")
     return webdriver.page_source, 200
+
+
+@app.route("/pagesourcedocker")
+def get_google_pagesource_docker():
+    webdriver = core.get_remote_chrome_driver()
+    webdriver.get("https://google.com")
+    return webdriver.page_source, 200

@@ -39,7 +39,7 @@ WEBPAGES = [
     "https://www.coles.com.au/browse/household/pest-control"
 ]
 
-DRIVER_PATH = r"chromedriver"
+DRIVER_PATH = r"/usr/local/bin/chromedriver"
 
 BASE_PATH = "screenshots"
 
@@ -65,6 +65,13 @@ def get_chrome_driver_from_manager() -> webdriver.Chrome:
     cdm = ChromeDriverManager(path=".")
     path = cdm.install()
     return webdriver.Chrome(service=Service(path))
+
+
+def get_remote_chrome_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument('--ignore-ssl-errors=yes')
+    options.add_argument('--ignore-certificate-errors')
+    return webdriver.Remote(command_executor="http://localhost:4444", options=options)
 
 
 def create_todays_directory() -> str:

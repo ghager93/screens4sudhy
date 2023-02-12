@@ -57,6 +57,8 @@ def get_chrome_driver(driver_path: str = DRIVER_PATH) -> webdriver.Chrome:
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1580,1280")
+    options.add_argument('--ignore-ssl-errors=yes')
+    options.add_argument('--ignore-certificate-errors')
 
     return webdriver.Chrome(service=service, options=options)
 
@@ -69,8 +71,6 @@ def get_chrome_driver_from_manager() -> webdriver.Chrome:
 
 def get_remote_chrome_driver():
     options = webdriver.ChromeOptions()
-    options.add_argument('--ignore-ssl-errors=yes')
-    options.add_argument('--ignore-certificate-errors')
     return webdriver.Remote(command_executor="http://localhost:4444", options=options)
 
 

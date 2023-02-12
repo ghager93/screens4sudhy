@@ -29,4 +29,6 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/so
 RUN apt-get -y update
 RUN apt-get -y install google-chrome-stable
 
-CMD ["gunicorn", "app:app"]
+EXPOSE 8000
+
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0"]

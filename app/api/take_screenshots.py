@@ -45,6 +45,7 @@ def delete_screenshots():
         _delete_all_screenshots()
         return "Deleted all screenshots", 200
 
+
 def _delete_all_screenshots():
     for root, dirs, files in os.walk('screenshots'):
         for f in files:
